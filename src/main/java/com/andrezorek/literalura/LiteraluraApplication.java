@@ -1,9 +1,11 @@
 package com.andrezorek.literalura;
 
+import com.andrezorek.literalura.repository.BookRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.andrezorek.literalura.dto.APIResponseDTO;
 import io.github.cdimascio.dotenv.Dotenv;
 import com.andrezorek.literalura.models.Book;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +17,9 @@ import static com.andrezorek.literalura.utils.RequestHandler.fetch;
 @SpringBootApplication
 @EntityScan("com/andrezorek/literalura/models")
 public class LiteraluraApplication implements CommandLineRunner {
+
+	@Autowired
+	private BookRepository repositorio; 
 
 	public static void main(String[] args) {
 		// Carrega as variáveis do .env e seta como propriedades do sistema
@@ -45,6 +50,9 @@ public class LiteraluraApplication implements CommandLineRunner {
 				.toList(); // cria a lista de Books
 
 		books.forEach(System.out::println);
+		for (Book book : books) {
+			repositorio.save(book);
+		}
 
 
 	}
