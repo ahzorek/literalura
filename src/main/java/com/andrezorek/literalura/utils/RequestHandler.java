@@ -1,4 +1,4 @@
-package services;
+package com.andrezorek.literalura.utils;
 
 import java.io.IOException;
 import java.net.URI;

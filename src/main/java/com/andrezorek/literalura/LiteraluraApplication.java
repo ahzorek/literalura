@@ -1,13 +1,19 @@
 package com.andrezorek.literalura;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.andrezorek.literalura.dto.APIResponseDTO;
 import io.github.cdimascio.dotenv.Dotenv;
+import com.andrezorek.literalura.models.Book;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import static services.RequestHandler.fetch;
+import java.util.List;
+import static com.andrezorek.literalura.utils.RequestHandler.fetch;
 
 @SpringBootApplication
+@EntityScan("com/andrezorek/literalura/models")
 public class LiteraluraApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
@@ -23,11 +29,23 @@ public class LiteraluraApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		// hello world
-		System.out.println("Hello from Springland");
+		System.out.println("Hello from Spring land");
 
-		var res = fetch("https://gutendex.com/books/?ids=3333");
+		var res = fetch("https://gutendex.com/books/?search=kama");
 
-		System.out.println("res = " + res);
+		// Desserializar o JSON para o data transfer object record
+		ObjectMapper mapper = new ObjectMapper();
+		APIResponseDTO response = mapper.readValue(res, APIResponseDTO.class);
+
+		// Exibindo o resultado com DTO
+		System.out.println("Contagem de Itens Recebidos::  " + response.count());
+
+		List<Book> books = response.results().stream()
+				.map(Book::new) // transforma cada BookDTO em um Book
+				.toList(); // cria a lista de Books
+
+		books.forEach(System.out::println);
+
 
 	}
 }
