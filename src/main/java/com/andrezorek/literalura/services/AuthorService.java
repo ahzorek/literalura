@@ -32,5 +32,10 @@ public class AuthorService {
         // exclui os autores com birthYear e deathYear como null
         return authors.stream()
                 .filter(author -> author.getBirthYear() != null && author.getDeathYear() != null)
-                .collect(Collectors.toList());    }
+                .collect(Collectors.toList());
+    }
+
+    public List<Author> getAll(){
+        return authorRepository.findAll();
+    }
 }

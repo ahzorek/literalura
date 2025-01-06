@@ -1,5 +1,6 @@
 package com.andrezorek.literalura.services;
 
+import com.andrezorek.literalura.models.Language;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,16 @@ public class BookService {
 
     public List<Book> findAllBooks() {
         return bookRepository.findAll();
+    }
+
+    // Listar livros por idioma
+    public List<Book> getBooksByLanguage(Language language) {
+        return bookRepository.findByLang(language);
+    }
+
+    // Contar livros por idioma
+    public int countBooksByLanguage(Language language) {
+        return bookRepository.countByLang(language);
     }
 }
 

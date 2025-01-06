@@ -3,6 +3,7 @@ package com.andrezorek.literalura.main;
 import com.andrezorek.literalura.dto.BookDTO;
 import com.andrezorek.literalura.models.Author;
 import com.andrezorek.literalura.models.Book;
+import com.andrezorek.literalura.models.Language;
 import com.andrezorek.literalura.services.APIService;
 import com.andrezorek.literalura.services.AuthorService;
 import com.andrezorek.literalura.services.BookService;
@@ -37,6 +38,7 @@ public class Main {
         options.add("Listagem de todos os livros");
         options.add("Lista de autores");
         options.add("Listar autores vivos em determinado ano");
+        options.add("Listar livros por Idioma");
 
         // Instanciando o menu principal
         Menu menu = new Menu(options);
@@ -60,8 +62,9 @@ public class Main {
             switch (op) {
                 case 1 -> this.searchBook();
                 case 2 -> this.listAllBooks();
-                case 3 -> System.out.println("Lista de autores...");
+                case 3 -> this.listAllAuthors();
                 case 4 -> this.listAuthorsAlive();
+                case 5 -> this.listBooksByLanguage();
                 case 0 -> System.out.println("Saindo da aplicação...");
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
@@ -117,5 +120,49 @@ public class Main {
 
         List<Author> authors = authorService.getAuthorsAliveInYear(year);
         authors.forEach(System.out::println);
+    }
+
+    private void listAllAuthors(){
+        List<Author> authors = authorService.getAll();
+        authors.forEach(System.out::println);
+    }
+
+    private void listBooksByLanguage(){
+        // Criar uma lista de opções de idiomas
+        List<String> languageOptions = new ArrayList<>();
+        for (Language language : Language.values()) {
+            languageOptions.add(language.name()); // Usa o nome do enum como opção
+        }
+        languageOptions.add(0, "Voltar"); // Adiciona a opção de sair como a primeira
+
+        // Instanciar o Menu com as opções de idiomas
+        Menu languageMenu = new Menu(languageOptions);
+        languageMenu.setMenuMessage("Escolha um idioma:");
+
+        // Exibir o menu e capturar a escolha do usuário
+        languageMenu.display();
+        Scanner scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
+
+        // Processar a escolha
+        if (choice == 0) {
+            System.out.println("Voltando.");
+            return;
+        }
+
+        if (choice > 0 && choice < languageOptions.size()) {
+            String selectedLanguageName = languageOptions.get(choice);
+            Language selectedLanguage = Language.valueOf(selectedLanguageName);
+
+            System.out.println("Livros no idioma: " + selectedLanguage.name());
+            bookService.getBooksByLanguage(selectedLanguage).forEach(book ->
+                    System.out.println(book.getTitle())
+            );
+
+            long count = bookService.countBooksByLanguage(selectedLanguage);
+            System.out.println("Total de livros em " + selectedLanguage.name() + ": " + count);
+        } else {
+            System.out.println("Opção inválida!");
+        }
     }
 }

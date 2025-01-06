@@ -11,4 +11,6 @@ public interface AuthorRepository extends JpaRepository<Author, Integer> {
 
     List<Author> findByBirthYearLessThanEqualAndDeathYearGreaterThanEqualOrDeathYearIsNull(int birthYear, int deathYear);
 
+    List<Author> findAll();
+
 }
