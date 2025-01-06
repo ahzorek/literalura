@@ -3,28 +3,31 @@ package com.andrezorek.literalura.models;
 import com.andrezorek.literalura.dto.BookDTO;
 import jakarta.persistence.*;
 
-// Classe para cada livro
+// Classe detalhada para cada livro
 @Entity
 @Table(name = "books")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id;
+    private Integer id;
 
-    @Column(unique = true)
     private String title;
 
-    @Transient
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Author author;
 
     private int download_count;
 
+    @Enumerated(EnumType.STRING)
+    private Language lang;
+
     public Book(){}
 
-    public Book(BookDTO bookData) {
+    public Book(BookDTO bookData, Author author) {
         this.title = bookData.title();
         this.download_count = bookData.downloadCount();
-        this.author = new Author(bookData.authors().get(0));
+        this.lang = Language.fromString(bookData.languages().get(0));
+        this.author = author;
     }
 
     public int getDownload_count() {
@@ -62,13 +65,17 @@ public class Book {
     // Método para exibir formatadamente
     @Override
     public String toString() {
-        return "Título: " + title + "\n" +
-                "Autor: " +
+        return "Title: " + title + "\n" +
+                "Author: " +
                 author.getName() + " (" +
                 (author.getBirthYear() == null ? "Desconhecido" : author.getBirthYear()) +
                 " - " +
                 (author.getDeathYear() == null ? "Desconhecido" : author.getDeathYear()) +
                 ")" + "\n" +
+                "Language: " + lang + "\n" +
                 "Downloads: " + download_count + "\n";
+    }
+
+    public void setLang(Language language) {
     }
 }
