@@ -25,7 +25,44 @@ O **Literalura** é um catálogo de livros interativo, desenvolvido como um desa
 
 O projeto está estruturado da seguinte maneira:
 
-<pre> ```plaintext src/ ├── main/ │ ├── java/ │ │ └── com/ │ │ └── andrezorek/ │ │ └── literalura/ │ │ ├── dto/ │ │ │ ├── APIResponseDTO.java │ │ │ ├── AuthorDTO.java │ │ │ └── BookDTO.java │ │ ├── models/ │ │ │ ├── Author.java │ │ │ ├── Book.java │ │ │ └── Language.java │ │ ├── repository/ │ │ │ ├── AuthorRepository.java │ │ │ └── BookRepository.java │ │ ├── services/ │ │ │ ├── APIService.java │ │ │ ├── AuthorService.java │ │ │ └── BookService.java │ │ ├── utils/ │ │ │ ├── Menu.java │ │ │ └── RequestHandler.java │ │ ├── main/ │ │ │ └── Main.java │ │ └── LiteraluraApplication.java │ └── resources/ │ └── application.properties └── test/ ├── java/ │ └── com/ │ └── andrezorek/ │ └── literalura/ │ └── LiteraluraApplicationTests.java └── resources/ ``` </pre>
+```plaintext 
+./src
+    ├── ./src/test
+    │   ├── ./src/test/java
+    │   │   ├── ./src/test/java/com
+    │   │   │   ├── ./src/test/java/com/andrezorek
+    │   │   │   │   ├── ./src/test/java/com/andrezorek/literalura
+    │   │   │   │   │   └── LiteraluraApplicationTests.java
+    ├── ./src/main
+    │   ├── ./src/main/resources
+    │   │   └── ./src/main/resources/application.properties
+    │   ├── ./src/main/java
+    │   │   ├── ./src/main/java/com
+    │   │   │   ├── ./src/main/java/com/andrezorek
+    │   │   │   │   ├── ./src/main/java/com/andrezorek/literalura
+    │   │   │   │   │   ├── ./src/main/java/com/andrezorek/literalura/dto
+    │   │   │   │   │   │   ├── BookDTO.java
+    │   │   │   │   │   │   ├── APIResponseDTO.java
+    │   │   │   │   │   │   └── AuthorDTO.java
+    │   │   │   │   │   ├── ./src/main/java/com/andrezorek/literalura/repository
+    │   │   │   │   │   │   ├── AuthorRepository.java
+    │   │   │   │   │   │   └── BookRepository.java
+    │   │   │   │   │   ├── ./src/main/java/com/andrezorek/literalura/services
+    │   │   │   │   │   │   ├── APIService.java
+    │   │   │   │   │   │   ├── AuthorService.java
+    │   │   │   │   │   │   └── BookService.java
+    │   │   │   │   │   ├── ./src/main/java/com/andrezorek/literalura/models
+    │   │   │   │   │   │   ├── Author.java
+    │   │   │   │   │   │   ├── Book.java
+    │   │   │   │   │   │   └── Language.java
+    │   │   │   │   │   ├── ./src/main/java/com/andrezorek/literalura/utils
+    │   │   │   │   │   │   ├── RequestHandler.java
+    │   │   │   │   │   │   ├── Menu.java
+    │   │   │   │   │   └── ./src/main/java/com/andrezorek/literalura/main
+    │   │   │   │   │       └── Main.java
+    │   │   │   │   └── LiteraluraApplication.java
+
+```
 
 
 ## Como Rodar
